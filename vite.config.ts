@@ -17,7 +17,7 @@ export default defineConfig({
 //       fileName: 'bundle'
 //     },
 //     rollupOptions: {
-//       external: ['vue'],
+//       // external: ['vue'],
 //       output: {
 //         globals: {
 //           vue: 'Vue'

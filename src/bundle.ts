@@ -1,20 +1,30 @@
 
 //@ts-nocheck
-import { defineComponent as n, openBlock as e, createElementBlock as s, toDisplayString as l } from "vue";
-const a = { class: "lib-custom-button" }, c = /* @__PURE__ */ n({
+import { defineComponent as u, ref as r, openBlock as o, createElementBlock as n, Fragment as m, createElementVNode as l, toDisplayString as a, createCommentVNode as i } from "vue";
+const p = { key: 0 }, d = /* @__PURE__ */ u({
   __name: "Button",
   props: {
     label: { default: "默认按钮" }
   },
-  setup(t) {
-    return (o, p) => (e(), s("button", a, l(o.label), 1));
+  setup(e) {
+    const t = r(0), s = () => {
+      t.value += 1;
+    };
+    return (c, _) => (o(), n(m, null, [
+      l("button", {
+        class: "lib-custom-button",
+        onClick: s
+      }, a(c.label), 1),
+      l("div", null, "Total: " + a(t.value), 1),
+      t.value === 6 ? (o(), n("div", p, "Test")) : i("", !0)
+    ], 64));
   }
-}), u = {
-  install(t) {
-    t.component("MyButton", c);
+}), b = {
+  install(e) {
+    e.component("MyButton", d);
   }
 };
 export {
-  c as MyButton,
-  u as default
+  d as MyButton,
+  b as default
 };
