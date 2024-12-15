@@ -3,5 +3,10 @@ import vue from '@vitejs/plugin-vue'
 import jsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
-  plugins: [vue(), jsx()],
+  plugins: [
+    vue({
+      include: [/\.vue$/, /\.setup\.[cm]?[jt]sx?$/]
+    }),
+    jsx()
+  ],
 })

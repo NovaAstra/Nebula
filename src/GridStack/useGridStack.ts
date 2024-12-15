@@ -36,7 +36,7 @@ export function useGridStack(props: GridStackProps, options?: GridStackOptions) 
     }
 
     const resetRemoveDrop = () => {
-        if(!gridStack){
+        if (!gridStack) {
             return
         }
     }
