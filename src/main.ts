@@ -1,4 +1,4 @@
-import { createSSRApp } from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 
-createSSRApp(App).mount('#app')
+createApp(App).mount('#app')
