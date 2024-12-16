@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import jsx from '@vitejs/plugin-vue-jsx'
+import path from 'path'
 
 export default defineConfig({
-  plugins: [
-    vue({
-      include: [/\.vue$/, /\.setup\.[cm]?[jt]sx?$/]
-    }),
-    jsx()
-  ],
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+
+    extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json', '.vue'],
+  },
 })
