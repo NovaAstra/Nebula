@@ -1,17 +1,7 @@
 import { GridStack, DDGridStack } from "gridstack"
 import { onMounted, useTemplateRef } from "vue";
+import { GridStackProps } from "./gridstack.type"
 
-export interface GridStackProps {
-  static: boolean;
-  float: boolean;
-  column: number;
-  showGridBlock: boolean;
-  animate: boolean;
-  minRow?: number;
-  maxRow?: number;
-  cellHeight?: number | string;
-  margin?: number | string;
-}
 
 export function useGridStack(props: GridStackProps) {
   let template = useTemplateRef<HTMLElement>("gridstack")
@@ -51,7 +41,11 @@ export function useGridStack(props: GridStackProps) {
 
   onMounted(() => {
     gridStack = GridStack.init({
-      lazyLoad:true
+      lazyLoad: true,
+      column: 12,
+      cellHeight: 160,
+      margin: 8,
+      float: true,
     }, template.value)
 
   })

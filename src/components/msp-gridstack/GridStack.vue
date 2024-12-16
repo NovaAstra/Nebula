@@ -1,33 +1,21 @@
-<template>
-    <div class="grid-stack" ref="gridstack">
-        <slot />
-    </div>
-</template>
-
 <script setup lang="ts">
-import { PropType } from "vue"
-import { GridStackNode } from "gridstack"
-import { useGridStack } from "./hooks/useGridStack"
+import { GridStackProps } from "./gridstack.type"
+import { useGridStack } from "./useGridStack"
 
 defineOptions({
     name: 'MspGridStack'
 })
 
-const props = defineProps({
-    modelValue: { type: Array as PropType<GridStackNode[]>, default: () => [] as GridStackNode[] },
-    static: { type: Boolean, default: () => false },
-    float: { type: Boolean, default: () => true },
-    column: { type: Number, default: () => 12 },
-    showGridBlock: { type: Boolean, default: () => false },
-    animate: { type: Boolean, default: () => true },
-    minRow: { type: Number },
-    maxRow: { type: Number },
-    cellHeight: { type: [Number, String] },
-    margin: { type: [Number, String] }
-})
+const props = defineProps<GridStackProps>()
 
 useGridStack(props)
 </script>
+
+<template>
+    <div class="grid-stack" ref="gridstack">
+        <slot />
+    </div>
+</template>
 
 <style lang="scss">
 @use "variables";
