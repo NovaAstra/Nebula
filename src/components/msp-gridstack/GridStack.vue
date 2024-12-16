@@ -12,7 +12,7 @@ useGridStack(props)
 </script>
 
 <template>
-    <div class="grid-stack" ref="gridstack">
+    <div class="msp-grid-stack grid-stack" ref="gridstack">
         <slot />
     </div>
 </template>

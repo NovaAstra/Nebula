@@ -39,6 +39,8 @@ export function useGridStackWidget(props: GridStackWidgetProps) {
 
   })
 
+  new IntersectionObserver(() => {})
+
   return {
     bindAttrs
   }
