@@ -1,6 +1,8 @@
 import { GridStack, DDGridStack } from "gridstack"
-import { onMounted, useTemplateRef } from "vue";
+import { onMounted, onUnmounted, useTemplateRef } from "vue";
 import { GridStackProps } from "./gridstack.type"
+import { useIntersectionObserver } from "./useIntersectionObserver"
+import { GridStackContextProvider } from "./gridstack.context"
 
 
 export function useGridStack(props: GridStackProps) {
@@ -8,6 +10,8 @@ export function useGridStack(props: GridStackProps) {
   let gridStack: GridStack = null;
 
   const dd = GridStack.getDD() as DDGridStack
+
+  const { observer } = useIntersectionObserver()
 
   const getColumn = () => {
     if (!gridStack) return null
@@ -44,10 +48,18 @@ export function useGridStack(props: GridStackProps) {
       lazyLoad: true,
       column: 12,
       cellHeight: 160,
-      margin: 8,
       float: true,
     }, template.value)
 
+    observer.observe(template.value)
+  })
+
+  onUnmounted(() => {
+    observer.disconnect()
+  })
+
+  GridStackContextProvider({
+    observer
   })
 
   return {

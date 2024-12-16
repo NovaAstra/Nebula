@@ -1,5 +1,6 @@
-import { computed, onMounted, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted, useTemplateRef } from "vue";
 import { GridStackWidgetProps } from "./gridstack.type"
+import { useGridStackContext } from "./gridstack.context"
 
 function transformAttrs(props: GridStackWidgetProps) {
   return {
@@ -16,6 +17,8 @@ function transformAttrs(props: GridStackWidgetProps) {
 }
 
 export function useGridStackWidget(props: GridStackWidgetProps) {
+  const template = useTemplateRef<HTMLElement>('widget')
+
   const {
     maxH = Number.MAX_SAFE_INTEGER,
     maxW = Number.MAX_SAFE_INTEGER,
@@ -31,17 +34,19 @@ export function useGridStackWidget(props: GridStackWidgetProps) {
     'gs-min-h': minH,
   }))
 
-  onMounted(() => {
+  const { observer } = useGridStackContext();
 
+
+  onMounted(() => {
+    observer.observe(template.value)
   })
 
   onUnmounted(() => {
-
+    observer.unobserve(template.value)
   })
 
-  new IntersectionObserver(() => {})
-
   return {
+    template,
     bindAttrs
   }
 }

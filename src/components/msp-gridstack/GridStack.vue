@@ -19,7 +19,11 @@ useGridStack(props)
 
 <style lang="scss">
 @use "variables";
+@use "gridstack";
 
-@use 'gridstack/dist/gridstack';
-@use 'gridstack/dist/gridstack-extra';
+.msp-grid-stack {
+    display: block;
+    position: relative;
+    background-color: #f5f5f5;
+}
 </style>
