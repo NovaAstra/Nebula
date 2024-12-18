@@ -7,8 +7,10 @@ export interface LazilyContext {
 
 export const LAZILY_INJECTION_KEY = Symbol('Lazily') as InjectionKey<LazilyContext>;
 
-export interface LazilyProps {
+export interface BaseLazilyProps {
   lazy?: boolean;
+  delay?: number | boolean;
   margin?: string;
   threshold?: number | number[];
+  tag?: string | Object;
 }

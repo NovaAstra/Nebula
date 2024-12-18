@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LazilyRoot } from "@/components/msp-lazily"
 import { GridStackProps } from "./gridstack.type"
 import { useGridStack } from "./useGridStack"
 
@@ -12,9 +13,9 @@ useGridStack(props)
 </script>
 
 <template>
-    <div class="msp-grid-stack grid-stack" ref="gridstack">
+    <LazilyRoot class="msp-grid-stack grid-stack" ref="gridstack">
         <slot />
-    </div>
+    </LazilyRoot>
 </template>
 
 <style lang="scss">

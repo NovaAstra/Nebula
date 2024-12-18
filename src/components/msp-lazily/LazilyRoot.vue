@@ -1,23 +1,25 @@
+<script lang="ts">
+import { BaseLazilyProps } from "./type"
+
+export interface LazilyRootProps extends BaseLazilyProps { }
+</script>
+
 <script lang="ts" setup>
-import { onMounted, onUnmounted, provide, useTemplateRef } from "vue";
+import { onUnmounted, provide, useTemplateRef } from "vue";
 import { useIntersectionObserver } from "./useIntersectionObserver"
-import { LAZILY_INJECTION_KEY, LazilyProps } from "./type"
+import { LAZILY_INJECTION_KEY } from "./type"
 
 defineOptions({
   name: "MspLazilyRoot"
 })
 
-const props = defineProps<LazilyProps>()
+const { tag = 'div', margin, threshold } = defineProps<LazilyRootProps>()
 
-const template = useTemplateRef<HTMLElement>("lazily-root")
+useTemplateRef<HTMLElement>("lazily-root")
 
 const observer = useIntersectionObserver({
-  rootMargin: props.margin,
-  threshold: props.threshold
-})
-
-onMounted(() => {
-  observer.observe(template.value)
+  rootMargin: margin,
+  threshold: threshold
 })
 
 onUnmounted(() => {
@@ -30,7 +32,7 @@ provide(LAZILY_INJECTION_KEY, {
 </script>
 
 <template>
-  <div class="lazily-root" ref="lazily-root">
+  <component class="lazily-root" ref="lazily-root" aria-atomic="true" :is="tag">
     <slot />
-  </div>
+  </component>
 </template>

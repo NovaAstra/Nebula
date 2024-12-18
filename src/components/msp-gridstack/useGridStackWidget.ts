@@ -17,7 +17,7 @@ function transformAttrs(props: GridStackWidgetProps) {
 }
 
 export function useGridStackWidget(props: GridStackWidgetProps) {
-  const template = useTemplateRef<HTMLElement>('widget')
+  const element = useTemplateRef<HTMLElement>('widget')
 
   const {
     maxH = Number.MAX_SAFE_INTEGER,
@@ -36,17 +36,17 @@ export function useGridStackWidget(props: GridStackWidgetProps) {
 
   const { observer } = useGridStackContext();
 
-
   onMounted(() => {
-    observer.observe(template.value)
+    observer.observe(element.value)
   })
 
   onUnmounted(() => {
-    observer.unobserve(template.value)
+    observer.unobserve(element.value)
   })
 
   return {
-    template,
+    element,
+
     bindAttrs
   }
 }

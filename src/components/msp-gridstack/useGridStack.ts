@@ -1,18 +1,11 @@
 import { GridStack, DDGridStack } from "gridstack"
 import { onMounted, onUnmounted, useTemplateRef } from "vue";
+import { unwrapEl } from "@/utilties/unwrapEl"
 import { GridStackProps } from "./gridstack.type"
 import { useIntersectionObserver } from "./useIntersectionObserver"
 import { GridStackContextProvider } from "./gridstack.context"
 
-
-export function useGridStack(props: GridStackProps) {
-  let template = useTemplateRef<HTMLElement>("gridstack")
-  let gridStack: GridStack = null;
-
-  const dd = GridStack.getDD() as DDGridStack
-
-  const { observer } = useIntersectionObserver()
-
+export function bindEvents(gridStack: GridStack | null) {
   const getColumn = () => {
     if (!gridStack) return null
     return gridStack.getColumn()
@@ -43,15 +36,35 @@ export function useGridStack(props: GridStackProps) {
     gridStack.compact()
   }
 
+  return {
+    getColumn,
+    getRow,
+    getCellWidth,
+    getCellHeight,
+    getMargin,
+
+    compact
+  }
+}
+
+export function useGridStack(props: GridStackProps) {
+  const element = useTemplateRef<HTMLElement>('gridstack')
+  let gridStack: GridStack = null;
+
+  const dd = GridStack.getDD() as DDGridStack
+
+  const { observer } = useIntersectionObserver()
+
   onMounted(() => {
+    const root = unwrapEl(element.value)
     gridStack = GridStack.init({
       lazyLoad: true,
       column: 12,
       cellHeight: 160,
       float: true,
-    }, template.value)
+    }, root)
 
-    observer.observe(template.value)
+    observer.observe(root)
   })
 
   onUnmounted(() => {
@@ -63,15 +76,9 @@ export function useGridStack(props: GridStackProps) {
   })
 
   return {
-    template,
+    element,
     gridStack,
 
-    getColumn,
-    getRow,
-    getCellWidth,
-    getCellHeight,
-    getMargin,
-
-    compact
+    ...bindEvents(gridStack)
   }
 }
