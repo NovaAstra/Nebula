@@ -11,6 +11,9 @@ importers:
       gridstack:
         specifier: ^11.1.2
         version: 11.1.2
+      uuid:
+        specifier: ^11.0.3
+        version: 11.0.3
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.2)
@@ -796,6 +799,10 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
+  uuid@11.0.3:
+    resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
+    hasBin: true
+
   vite@6.0.3:
     resolution: {integrity: sha512-Cmuo5P0ENTN6HxLSo6IHsjCLn/81Vgrp81oaiFFMRa8gGDj5xEjIcEpf2ZymZtZR8oU0P2JX5WuUp/rlXcHkAw==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
@@ -1580,6 +1587,8 @@ snapshots:
       browserslist: 4.24.3
       escalade: 3.2.0
       picocolors: 1.1.1
+
+  uuid@11.0.3: {}
 
   vite@6.0.3(@types/node@22.10.2)(sass@1.83.0):
     dependencies:
