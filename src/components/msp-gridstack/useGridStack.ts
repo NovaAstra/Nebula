@@ -1,39 +1,38 @@
 import { GridStack, DDGridStack } from "gridstack"
-import { onMounted, onUnmounted, useTemplateRef } from "vue";
+import { onMounted, provide, Ref, ref, unref, useTemplateRef } from "vue";
 import { unwrapEl } from "@/utilties/unwrapEl"
 import { GridStackProps } from "./gridstack.type"
-import { useIntersectionObserver } from "./useIntersectionObserver"
-import { GridStackContextProvider } from "./gridstack.context"
+import { GRIDSTACK_INJECTION_KEY } from "./type"
 
-export function bindEvents(gridStack: GridStack | null) {
+export function bindEvents(gridStack: Ref<GridStack>) {
   const getColumn = () => {
-    if (!gridStack) return null
-    return gridStack.getColumn()
+    if (!unref(gridStack)) return null
+    return unref(gridStack).getColumn()
   }
 
   const getRow = () => {
-    if (!gridStack) return null
-    return gridStack.getRow()
+    if (!unref(gridStack)) return null
+    return unref(gridStack).getRow()
   }
 
   const getCellWidth = () => {
-    if (!gridStack) return null
-    return gridStack.cellWidth()
+    if (!unref(gridStack)) return null
+    return unref(gridStack).cellWidth()
   }
 
   const getCellHeight = () => {
-    if (!gridStack) return null
-    return gridStack.getCellHeight()
+    if (!unref(gridStack)) return null
+    return unref(gridStack).getCellHeight()
   }
 
   const getMargin = () => {
-    if (!gridStack) return null
-    return gridStack.getMargin()
+    if (!unref(gridStack)) return null
+    return unref(gridStack).getMargin()
   }
 
   const compact = () => {
-    if (!gridStack) return
-    gridStack.compact()
+    if (!unref(gridStack)) return
+    unref(gridStack).compact()
   }
 
   return {
@@ -49,30 +48,23 @@ export function bindEvents(gridStack: GridStack | null) {
 
 export function useGridStack(props: GridStackProps) {
   const element = useTemplateRef<HTMLElement>('gridstack')
-  let gridStack: GridStack = null;
+  let gridStack = ref<GridStack>();
 
   const dd = GridStack.getDD() as DDGridStack
 
-  const { observer } = useIntersectionObserver()
-
   onMounted(() => {
     const root = unwrapEl(element.value)
-    gridStack = GridStack.init({
+    gridStack.value = GridStack.init({
       lazyLoad: true,
       column: 12,
       cellHeight: 160,
       float: true,
     }, root)
 
-    observer.observe(root)
   })
 
-  onUnmounted(() => {
-    observer.disconnect()
-  })
-
-  GridStackContextProvider({
-    observer
+  provide(GRIDSTACK_INJECTION_KEY, {
+    gridStack
   })
 
   return {
