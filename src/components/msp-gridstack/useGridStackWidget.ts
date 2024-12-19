@@ -1,8 +1,7 @@
-import { computed, inject, onMounted, unref, useTemplateRef } from "vue";
-import { GridStackWidgetProps } from "./gridstack.type"
-import { GRIDSTACK_INJECTION_KEY } from "./type"
+import { computed, useTemplateRef } from "vue";
+import { GridStackWidgetProps } from "./type"
 
-function transformAttrs(props: GridStackWidgetProps) {
+function getAttrs(props: GridStackWidgetProps) {
   return {
     'gs-id': props.id,
     'gs-x': props.x,
@@ -19,8 +18,6 @@ function transformAttrs(props: GridStackWidgetProps) {
 export function useGridStackWidget(props: GridStackWidgetProps) {
   const element = useTemplateRef<HTMLElement>('widget')
 
-  const { gridStack } = inject(GRIDSTACK_INJECTION_KEY);
-
   const {
     maxH = Number.MAX_SAFE_INTEGER,
     maxW = Number.MAX_SAFE_INTEGER,
@@ -29,22 +26,12 @@ export function useGridStackWidget(props: GridStackWidgetProps) {
   } = props
 
   const bindAttrs = computed(() => ({
-    ...transformAttrs(props),
+    ...getAttrs(props),
     'gs-max-w': maxW,
     'gs-max-h': maxH,
     'gs-min-w': minW,
     'gs-min-h': minH,
   }))
-
-
-  onMounted(() => {
-    if (unref(gridStack)) {
-      unref(gridStack).batchUpdate();
-      unref(gridStack).makeWidget(element.value);
-      unref(gridStack).commit();
-    }
-
-  })
 
   return {
     element,

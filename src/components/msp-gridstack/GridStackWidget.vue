@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Lazily } from "@/components/msp-lazily"
 import { GridStackWidgetProps } from "./gridstack.type"
 import { useGridStackWidget } from "./useGridStackWidget"
 
@@ -14,10 +13,9 @@ const { bindAttrs } = useGridStackWidget(props)
 
 <template>
   <div class="grid-stack-item" ref="widget" v-bind="bindAttrs">
-    <Lazily class="grid-stack-item-content msp-grid-stack-widget ">
-        <slot />
-        1231
-    </Lazily>
+    <div class="grid-stack-item-content msp-grid-stack-widget">
+      <slot />
+    </div>
   </div>
 </template>
 

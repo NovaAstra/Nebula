@@ -1,6 +1,5 @@
 import { GridStack, DDGridStack } from "gridstack"
-import { onMounted, provide, Ref, ref, unref, useTemplateRef } from "vue";
-import { unwrapEl } from "@/utilties/unwrapEl"
+import { onMounted, provide, Ref, ref, unref, useSlots, useTemplateRef } from "vue";
 import { GridStackProps } from "./gridstack.type"
 import { GRIDSTACK_INJECTION_KEY } from "./type"
 
@@ -52,14 +51,15 @@ export function useGridStack(props: GridStackProps) {
 
   const dd = GridStack.getDD() as DDGridStack
 
+console.log(  useSlots().default()
+)
   onMounted(() => {
-    const root = unwrapEl(element.value)
     gridStack.value = GridStack.init({
       lazyLoad: true,
       column: 12,
       cellHeight: 160,
       float: true,
-    }, root)
+    }, element.value)
 
   })
 
